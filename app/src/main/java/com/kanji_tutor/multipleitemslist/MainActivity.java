@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
             strings.add((i % 4 == 0) ? ("separator " + sep++) : ("item " + item++));
         }
 
-        mAdapter = new MultiItemListAdapter(this, strings);
+        mAdapter = new MultiItemListAdapter<String>(this, strings);
         list.setAdapter(mAdapter);
     }
 }

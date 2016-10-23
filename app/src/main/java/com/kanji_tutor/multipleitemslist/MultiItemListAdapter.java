@@ -14,14 +14,14 @@ import java.util.TreeSet;
  * Created by sjs on 10/23/16.
  */
 
-public class MultiItemListAdapter extends BaseAdapter {
+public class MultiItemListAdapter<E> extends BaseAdapter {
     private static final String TAG = "MultiItemListAdapter";
 
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_SEPARATOR = 1;
     private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
 
-    private ArrayList<String> mData;
+    private ArrayList<E> mData;
     private LayoutInflater mInflater;
 
     private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
@@ -30,7 +30,7 @@ public class MultiItemListAdapter extends BaseAdapter {
         public TextView textView;
     }
 
-    public MultiItemListAdapter(Context c, ArrayList<String> strings) {
+    public MultiItemListAdapter(Context c, ArrayList<E> strings) {
         mInflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = strings;
     }
@@ -51,7 +51,7 @@ public class MultiItemListAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public E getItem(int position) {
         return mData.get(position);
     }
 
@@ -80,7 +80,7 @@ public class MultiItemListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.textView.setText(mData.get(position));
+        holder.textView.setText((String)(mData.get(position)));
         return convertView;
     }
 
