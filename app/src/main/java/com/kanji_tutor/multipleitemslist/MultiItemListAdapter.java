@@ -21,8 +21,8 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
     private static final int TYPE_SEPARATOR = 1;
     private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
 
-    private ArrayList<E> mData;
-    private LayoutInflater mInflater;
+    private ArrayList<ViewHolderDelegate> items;
+    private LayoutInflater inflater;
 
     private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
 
@@ -30,9 +30,9 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
         public TextView textView;
     }
 
-    public MultiItemListAdapter(Context c, ArrayList<E> strings) {
-        mInflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mData = strings;
+    public MultiItemListAdapter(Context c, ArrayList<ViewHolderDelegate> items) {
+        inflater = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.items = items;
     }
 
     @Override
@@ -41,46 +41,39 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return TYPE_MAX_COUNT;
-    }
-
-    @Override
     public int getCount() {
-        return mData.size();
+        return items.size();
     }
 
     @Override
-    public E getItem(int position) {
-        return mData.get(position);
+    public ViewHolderDelegate getItem(int position) {
+        return items.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return items.get(position).getItemType();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        int type = getItemViewType(position);
+        ViewHolderDelegate item = items.get(position);
         if (convertView == null) {
-            holder = new ViewHolder();
-            switch (type) {
-                case TYPE_ITEM:
-                    convertView = mInflater.inflate(R.layout.item1, null);
-                    holder.textView = (TextView)convertView.findViewById(R.id.text);
-                    break;
-                case TYPE_SEPARATOR:
-                    convertView = mInflater.inflate(R.layout.item2, null);
-                    holder.textView = (TextView)convertView.findViewById(R.id.textSeparator);
-                    break;
-            }
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder)convertView.getTag();
+            convertView = item.newVH(inflater, position);
         }
-        holder.textView.setText((String)(mData.get(position)));
+        else {
+            ViewHolderDelegate currentItem = (ViewHolderDelegate)convertView.getTag();
+            if (currentItem.getItemType() == item.getItemType()) {
+                if (currentItem.getPosition() != item.getPosition()) {
+                    item.moveFromVH(currentItem, position);
+                }
+            }
+            else {
+                currentItem.freeVH();
+                item.newVH(inflater, position);
+            }
+        }
+        convertView.setTag(item);
         return convertView;
     }
 

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-    private MultiItemListAdapter mAdapter;
+    private MultiItemListAdapter<ViewHolderDelegate> mAdapter;
 
-    private ArrayList<String> strings = new ArrayList<String>();
+    private ArrayList<ViewHolderDelegate> items = new ArrayList<ViewHolderDelegate>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,10 @@ public class MainActivity extends Activity {
         ListView list = (ListView)findViewById(R.id.main_layout);
         int sep = 1, item = 1;
         for (int i = 0; i < 50; i++) {
-            strings.add((i % 4 == 0) ? ("separator " + sep++) : ("item " + item++));
+            items.add(new Item((i % 4 == 0) ? ("separator " + sep++) : ("item " + item++)));
         }
 
-        mAdapter = new MultiItemListAdapter<String>(this, strings);
+        mAdapter = new MultiItemListAdapter<ViewHolderDelegate>(this, items);
         list.setAdapter(mAdapter);
     }
 }
