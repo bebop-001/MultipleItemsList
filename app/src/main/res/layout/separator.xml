@@ -4,7 +4,7 @@
 	android:layout_height="wrap_content"
 	android:layout_width="fill_parent">
 	<TextView
-		android:id="@+id/textSeparator"
+		android:id="@+id/separator_text"
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:text="text"

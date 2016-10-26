@@ -1,6 +1,7 @@
 package com.kanji_tutor.multipleitemslist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,22 +59,42 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderDelegate item = items.get(position);
+Log.e(TAG, "0 cv:position=" + position
+    + ((convertView == null)
+        ? ":no view"
+        : ":viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null)
+            ? "NULL"
+            : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId())));
         if (convertView == null) {
             convertView = item.newVH(inflater, position);
+            convertView.setTag(item);
         }
         else {
             ViewHolderDelegate currentItem = (ViewHolderDelegate)convertView.getTag();
+Log.e(TAG, "1 cv:viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null) ? "NULL" : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId()));
             if (currentItem.getItemType() == item.getItemType()) {
-                if (currentItem.getPosition() != item.getPosition()) {
-                    item.moveFromVH(currentItem, position);
+                if (position != currentItem.getPosition()) {
+Log.e(TAG, "2 cv:viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null) ? "NULL" : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId()));
+                    convertView = item.moveToVH(convertView, position);
+                    convertView.setTag(item);
                 }
+                else {
+                    Log.e(TAG, "3 cv:viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null) ? "NULL" : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId()));
+
+                }
+                // else previous position and current are same -- this does happen!S
             }
             else {
+                Log.e(TAG, "4  cv:viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null) ? "NULL" : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId()));
+                Log.e(TAG, "4+ cv:itemID=" + item.getId() + ":itemPosition=" + item.getPosition() + "new position=" + position);
                 currentItem.freeVH();
-                item.newVH(inflater, position);
+                // currentItem.saveVH();
+                convertView = item.newVH(inflater, position);
+                convertView.setTag(item);
             }
         }
-        convertView.setTag(item);
+        parent.invalidate();
+Log.e(TAG, "5 cv:viewID=" + convertView.getId() + ":tag:" + ((convertView.getTag() == null) ? "NULL" : "ItemID=" + ((ViewHolderDelegate) convertView.getTag()).getId()));
         return convertView;
     }
 

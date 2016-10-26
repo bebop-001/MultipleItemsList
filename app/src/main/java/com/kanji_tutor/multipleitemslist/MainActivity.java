@@ -19,7 +19,9 @@ public class MainActivity extends Activity {
         ListView list = (ListView)findViewById(R.id.main_layout);
         int sep = 1, item = 1;
         for (int i = 0; i < 50; i++) {
-            items.add(new Item((i % 4 == 0) ? ("separator " + sep++) : ("item " + item++)));
+            items.add((i % 4 == 0)
+                    ? new Separator("separator " + sep++)
+                    : new Item("item " + item++));
         }
 
         mAdapter = new MultiItemListAdapter<ViewHolderDelegate>(this, items);
