@@ -35,8 +35,7 @@ public class MultiItemListAdapter extends BaseAdapter {
      */
     @Override
     public int getItemViewType(int position) {
-        int itemResId = (int) getItem(position).getItemResId();
-        return ViewHolderDelegate.getItemViewType(itemResId);
+        return getItem(position).getItemViewType();
     }
     /**
      * Used to get the number of view types in the input object list..
