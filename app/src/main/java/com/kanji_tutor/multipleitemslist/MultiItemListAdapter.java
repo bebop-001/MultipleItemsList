@@ -51,9 +51,9 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh = (convertView == null || convertView.getTag() == null)
+        ViewHolderDelegate.ViewHolder vh = (convertView == null || convertView.getTag() == null)
             ? null
-            : (ViewHolder) convertView.getTag();
+            : (ViewHolderDelegate.ViewHolder) convertView.getTag();
         if (vh == null || vh.getPosition() != position) {
             convertView = getItem(position).setupVH(inflater, vh, position);
         }

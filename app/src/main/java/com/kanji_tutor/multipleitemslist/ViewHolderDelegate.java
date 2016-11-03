@@ -14,6 +14,20 @@ public abstract class  ViewHolderDelegate {
     public static int getItemViewType(int resId) {return objTypeCounter.indexOfKey(resId); }
     public static int getViewTypeCount() {return objTypeCounter.size(); }
 
+    private static int viewHolderCounter;
+    abstract class ViewHolder {
+        private static final String TAG = "ViewHolder";
+        private int ID;
+
+        abstract public String toString();
+        abstract int getPosition();
+
+        abstract protected int getItemResId();
+        protected ViewHolder(int resId) {
+            ID = viewHolderCounter++;
+        }
+        protected int getId() { return ID; }
+    }
 
     // Setup the view holder associated with (possibly another) delegate.
     abstract protected View setupVH(LayoutInflater inflater, ViewHolder vh, int position);
