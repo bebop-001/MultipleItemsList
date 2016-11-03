@@ -9,46 +9,84 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by sjs on 10/23/16.
+ * The MultiItemListAdapter class is used in conjunction with the ViewHolderDelegate and its
+ * children to create list views that support multiple different types of views.
  */
-
-public class MultiItemListAdapter<E> extends BaseAdapter {
+public class MultiItemListAdapter extends BaseAdapter {
     private static final String TAG = "MultiItemListAdapter";
 
-    private ArrayList<ViewHolderDelegate> items;
-    private LayoutInflater inflater;
-
+    private ArrayList<ViewHolderDelegate> items;  // items to display in the list.
+    private LayoutInflater inflater; // inflater used to 'inflate' a view from its resource id.
+    /**
+     * class constructor.  Context is necessary for getting an inflater for creating the
+     * views placed in the list view.  items is the object list for items to be displayed.
+     * @param context
+     * @param items
+     */
     public MultiItemListAdapter(Context context, ArrayList<ViewHolderDelegate> items) {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.items = items;
     }
-
+    /**
+     * getItemViewType returns an int between 0 and N where N is the one less than
+     * the number of different view types that the list objects create.
+     * @param  position the position of the object in the list.
+     * @return view     type index
+     */
     @Override
     public int getItemViewType(int position) {
         int itemResId = (int) getItem(position).getItemResId();
         return ViewHolderDelegate.getItemViewType(itemResId);
     }
-
+    /**
+     * Used to get the number of view types in the input object list..
+     * @return int total number of possible views.
+     */
     @Override
     public int getViewTypeCount() {
         return ViewHolderDelegate.getViewTypeCount();
     }
-
+    /**
+     * Return the total number of objects in the list.
+     * @return int number of items in list
+     */
     @Override
     public int getCount() {
         return items.size();
     }
-
+    /**
+     * getItem returns the object associted with the position in the list.
+     * @param position  position of an item in the list view/item list.
+     * @return object   from the items list.
+     */
     @Override
     public ViewHolderDelegate getItem(int position) {
         return items.get(position);
     }
-
+    /**
+     * ID doesn't seem to have a defined meaning so is used (I think) for whatever you want.
+     * @param position  position of an item in the list view/item list
+     * @return ID       ID of associated object.
+     */
     @Override
     public long getItemId(int position) {
         return getItem(position).getItemId();
     }
-
+    /**
+     * getView is the method called when the list view changes.  It is used for view recycling.
+     * convertView is the view for the item in the list that has just become visible.  It will be
+     * either null or contain info for a list view that has just disappeared.  The purpose of
+     * this method is to update the convertView so it displays the proper information for the
+     * position in the listview.
+     *
+     * rhw convertView TAG contains the view holder which contains info on the view and allows the
+     * program to update the convertView appropriately.
+     *
+     * @param position      position of item that has just become visible.
+     * @param convertView   view for object that has just become visible.
+     * @param parent        parent for convert view.  Usualy the id for the list view.
+     * @return view         for associated object.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolderDelegate.ViewHolder vh = (convertView == null || convertView.getTag() == null)
@@ -59,6 +97,5 @@ public class MultiItemListAdapter<E> extends BaseAdapter {
         }
         return convertView;
     }
-
 }
 
