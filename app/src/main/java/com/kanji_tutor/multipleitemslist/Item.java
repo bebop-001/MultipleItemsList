@@ -16,17 +16,16 @@ public class Item extends ViewHolderDelegate {
     private String itemText;
     public class ItemVH extends ViewHolder {
         private static final String TAG = "ItemVH";
-        private static final int resId = R.layout.item;
 
         protected View view;
         protected TextView itemTV;
         protected int position;
         protected Item item;
 
-        @Override  protected int getItemResId() {return resId; }
+        @Override  public int getItemResId() {return resId; }
 
         protected ItemVH(LayoutInflater inflater) {
-            super(resId);
+            super();
             view = inflater.inflate(resId, null);
             view.setId(super.getId());
             itemTV = (TextView)view.findViewById(R.id.item_text);

@@ -15,16 +15,13 @@ public class Separator extends ViewHolderDelegate {
 
     public class SeparatorVH extends ViewHolder {
         private static final String TAG = "SeparatorVH";
-        private static final int resId = R.layout.separator;
 
         protected View view;
         protected TextView separatorTV;
         protected Separator separator;
 
-        @Override protected int getItemResId() {return resId; }
-
         protected SeparatorVH(LayoutInflater inflater) {
-            super(resId);
+            super();
             view = inflater.inflate(resId, null);
             view.setId(super.getId());
             separatorTV = (TextView)view.findViewById(R.id.separator_text);
@@ -34,6 +31,9 @@ public class Separator extends ViewHolderDelegate {
         int getPosition() {
             return position;
         }
+
+        @Override
+        public int getItemResId() { return resId; }
 
         @Override
         public String toString() {

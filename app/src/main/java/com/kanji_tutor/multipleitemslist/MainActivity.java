@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-    private MultiItemListAdapter<ViewHolderDelegate> mAdapter;
+    private MultiItemListAdapter mAdapter;
 
     private ArrayList<ViewHolderDelegate> items = new ArrayList<ViewHolderDelegate>();
 
@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
                     : new Item("item " + item++));
         }
 
-        mAdapter = new MultiItemListAdapter<ViewHolderDelegate>(this, items);
+        mAdapter = new MultiItemListAdapter(this, items);
         list.setAdapter(mAdapter);
     }
 }
