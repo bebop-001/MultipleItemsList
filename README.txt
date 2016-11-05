@@ -1,6 +1,8 @@
 
 Fri Nov  4 13:26:58 PDT 2016
 
+Keywords: Android array adapter multiple-view-type object Java recycle viewholder
+
 This app is an example of a listview adapter that holds multiple viewtypes
 using an objects.  It creates multiple types of viewholders based on
 the object in the view addapter's item list.
