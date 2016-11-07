@@ -1,7 +1,9 @@
 
 Fri Nov  4 13:26:58 PDT 2016
 
-Keywords: Android array adapter multiple-view-type object Java recycle viewholder
+**Keywords**: Android array adapter multiple-view-type object Java recycle viewholder
+
+![app screenshot](https://github.com/bebop-001/markdown-images/blob/master/screenshot.MultipleItemsList.png  "app screenshot")
 
 This app is an example of a listview adapter that holds multiple viewtypes using an objects.  It creates multiple types of viewholders based on the object in the view addapter's item list.
 
@@ -58,9 +60,9 @@ Each child ViewHoldedDelegate, child ViewHolder and view is assigned a unique in
 
 Each child also has an abstract toString method for debugging.
 
-The ViewHolder inner class contains the View objects used to create object view.  I made an effort to keep all the view objects -- even it's position -- within the ViewHolder for purposes of encapulation.  The ViewHolderDelegate child setupVH method directly accesses the ViewHolder view objects as a "trusted object" and to speed-up and simplify ViewHolder update.
+The *ViewHolder* inner class contains the View objects used to create object view.  I made an effort to keep all the view objects -- even it's position -- within the ViewHolder for purposes of encapulation.  The *ViewHolderDelegate* child setupVH method directly accesses the *ViewHolder***** view objects as a "trusted object" and to speed-up and simplify ViewHolder update.
 
-The ViewHolderDelegate.ViewHolder class has a constructor, a getId and two abstract methods: getPosition and getItemResId.
+The *ViewHolderDelegate.ViewHolder* class has a constructor, a *getId* and two abstract methods: *getPosition* and *getItemResId*.
 
 * abstract public int getItemResId: the outer ViewHolderDelegate and the inner ViewHolder classes use the resId to determine that they are compatible.  The ViewHolderDelegate setupVH method uses it to determine whether it needs to create a new ViewHolder object.
 
@@ -68,12 +70,9 @@ The ViewHolderDelegate.ViewHolder class has a constructor, a getId and two abstr
 
 **How to add a new list view object**
 
-Adding a new view object is should be straight forward.  
+Adding a new view object is straight forward.  
 
-* Create a new the R.layout.xml file for your object, copy one of the example
-ViewHolderDelegate child classes (Item.java, Separator.java or
-ButtonItem.java) and update it to support your new object.  Updating
-the new child consists of updating the resId R.layout value, updating
-the ViewHolder child object with the new view objects, and updating
-the ViewHolder child setupVH method to appropriately update/create
-the VeiwHolder.
+* Create a new the R.layout.xml file for your object.
+* Use Android Studio to copy one of the example files.
+* Modify  this new child object to support your new layout object.  The new child will have an inner *ViewHolder*  class that will need modification so it "understands" your new view object.  The constructor of this object will create a new view and find your view objects and save them.  It also has a new *protected View setupVH* that is called from the list adapter *GetView* method.  This method is called when your view becomes visible in the list view and must be modified to update the new object.
+
