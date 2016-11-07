@@ -6,6 +6,7 @@ Monday, 07. November 2016 01:57PM
 **Keywords**: Android array adapter multiple-view-type object Java recycle viewholder
 
 ![app screenshot](https://github.com/bebop-001/markdown-images/blob/master/screenshot.MultipleItemsList.png  "app screenshot")
+
 This is a screenshot of the demo application.  It has three different view types: two contain only a *TextView* and the third shows a *Button*.
 
 The list adapter class is MultiItemListAdapter.  Two items that the adapter must override to support for support of multiple views are:
