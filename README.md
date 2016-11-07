@@ -1,20 +1,19 @@
 
-Fri Nov  4 13:26:58 PDT 2016
+Monday, 07. November 2016 01:57PM 
+
+###Android ViewHolder delegate for ListViewAdapter that supports multiple view types and uses objects to determine how to update views.
 
 **Keywords**: Android array adapter multiple-view-type object Java recycle viewholder
 
 ![app screenshot](https://github.com/bebop-001/markdown-images/blob/master/screenshot.MultipleItemsList.png  "app screenshot")
+This is a screenshot of the demo application.  It has three different view types: two contain only a *TextView* and the third shows a *Button*.
 
-This app is an example of a listview adapter that holds multiple viewtypes using an objects.  It creates multiple types of viewholders based on the object in the view addapter's item list.
+The list adapter class is MultiItemListAdapter.  Two items that the adapter must override to support for support of multiple views are:
 
-The list adapter class is MultiItemListAdapter.  Two items that theadapter must override to support for support of multiple views are:
+* *int getItemViewType(int position)*:  This method returns a 0-based integer  index that indicates what view type the object uses.
+* *int getViewTypeCount()*: This method returns a count of the total number  of different views in the adapter's item list.
 
-* int getItemViewType(int position):  This method returns a 0-based integer
-    index that indicates what view type the object uses.
-* int getViewTypeCount(): This method returns a count of the total number
-    of different views in the adapter's item list.
-
-The adapter getView method is where the views displayed in the adapter's listview are created.  With most of the ViewAdapters I've seen, the item's viewHolder (used to cache the views during recycling) is contained as the getView's convertView tag.  The developer's code uses this convertView to determine when the listview item's view must be updated.  If the convertView is null or missing a viewHolder (i.e. convertView.getTag == null) or the viewHolder represents a different view type or position than the position getView is updating, you must update/create the convertView.
+The adapter *getView*  list adapter method updates the adapter's listview views as they become visible during scrolling.  With most of the ViewAdapters I've seen, the item's viewHolder (used to cache the views during recycling) is contained as the getView's convertView tag.  The developer's code uses this convertView to determine when the listview item's view must be updated.  If the convertView is null or missing a viewHolder (i.e. convertView.getTag == null) or the viewHolder represents a different view type or position than the position getView is updating, you must update/create the convertView.
 
 The 'expensive' part of the view adapter is creating a new view and finding (findViewById) the various objects within the view.  A viewHolder is a cache object that speeds up this process.  It contains the parent view and the various object views within it.  This allows the view to be reused as long as the view holder object is the same as the object being displayed in the listView item.
 
